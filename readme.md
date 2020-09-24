@@ -3,7 +3,7 @@ Takes Stencil and Storybook and mashes them together.
 
 - - -
 
-This setup uses the `@storybook/addon-essentials`, all working with Controls etc. Stories written via CSF (we don't use MDX so haven't tested that at all).
+This setup uses Stencil, `@storybook/web-components` and `@storybook/addon-essentials` (e.g. Controls, Actions). Stories written via CSF (we don't use MDX so haven't tested that at all).
 
 Stencil generates a web-component JSON file containing component definitions (via the `docs-vscode` command).
 This JSON gets registered with `@storybook/web-components`, which populates the component args.
@@ -13,6 +13,7 @@ Added some extra integration between Storybook and Stencil devservers, so that b
 ![Stencil error inside Storybook](https://i.imgur.com/089EHyH.png)
 ![Storybook error inside Storybook](https://i.imgur.com/2xWS8cB.png)
 
+(check `./storybook/preview-body.html` and `./src/index.html` for the deets).
 
 I also did some webpack hackery to automatically inject `module.hot.reject()` into each story - this causes webpack to NOT "hot in" changes, and instead does a full reload of the Storybook preview iframe. This is required since the web-component will already be registered with the DOM so HMR doesn't work. 
 
