@@ -1,15 +1,10 @@
 import { isValidMetaData, setCustomElements } from '@storybook/web-components';
-// your-addon/register.js
-
-// import { useArgs } from '@storybook/api';
-// const [args, updateArgs,resetArgs] = useArgs();
-
 import { defineCustomElements } from '../dist-stencil/esm/loader.js';
 
 defineCustomElements(window, {});
 
 const elementDefs = require('../dist-stencil/stencilbook-ding.json');
-console.log('[preview.js] isValidMetaData: ', isValidMetaData(elementDefs));
+// console.log('[preview.js] isValidMetaData: ', isValidMetaData(elementDefs));
 setCustomElements(elementDefs);
 
 export const parameters = {
