@@ -1,0 +1,27 @@
+<script type="text/javascript"> // TODO ideally this script would only exist at dev time, and production builds of storybook would strip it out.
+  (function () {
+    var iframeEl = document.createElement('iframe');
+
+    function onErrorChange (event) {
+      if (event.type === 'message' && event.data && event.data.type === 'stencil-error-modal-change') {
+        if (event.data.hasError) {
+          iframeEl.classList.add('stencil-error-frame--has-error');
+        } else {
+          iframeEl.classList.remove('stencil-error-frame--has-error');
+        }
+      }
+    }
+
+    iframeEl.onerror = function () {
+      // iframe failed to load. Probably means Stencil dev server isn't running (perhaps Storybook is running in production?)
+      document.body.removeChild(iframeEl);
+      window.removeEventListener('message', onErrorChange);
+    }
+
+    window.addEventListener('message', onErrorChange);
+
+    iframeEl.classList.add('stencil-error-frame');
+    iframeEl.src = 'http://localhost:3333/';
+    document.body.appendChild(iframeEl);
+  })();
+</script>

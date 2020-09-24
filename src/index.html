@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html
+    dir="ltr"
+    lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
+    <title>Stencil dev modal</title>
+    <style>body { margin: unset; }</style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window === window.parent) {
+                // not running inside an iframe
+                return;
+            }
+
+            function onErrorChange() {
+                window.parent.postMessage({
+                    type: 'stencil-error-modal-change',
+                    hasError: !!document.getElementById('dev-server-modal'),
+                }, '*'); // posts message to all origins, don't add sensitive stuff to this message...
+            }
+
+            const observer = new MutationObserver((mutationsList) => {
+                const errorHasChanged = mutationsList.some(mutation =>
+                                                            mutation.type === 'childList'
+                                                            && Array.from(mutation.addedNodes)
+                                                                .concat(Array.from(mutation.removedNodes))
+                                                                .some(el => el.getAttribute('id') === 'dev-server-modal'));
+
+                if (errorHasChanged) {
+                    onErrorChange();
+                }
+            });
+
+            observer.observe(document.body, { attributes: false, childList: true, subtree: false });
+            onErrorChange();
+        }, false);
+    </script>
+</head>
+<body>
+<!-- This file is intentionally empty. Components are rendered by stories, this index.html is only used to host the Stencil dev server error modal. -->
+</body>
+</html>
