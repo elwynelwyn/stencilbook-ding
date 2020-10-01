@@ -15,7 +15,9 @@ Added some extra integration between Storybook and Stencil devservers, so that b
 
 (check `./storybook/preview-body.html` and `./src/index.html` for the deets).
 
-I also did some webpack hackery to automatically inject `module.hot.decline()` into each story - this causes webpack to NOT "hot in" changes, and instead does a full reload of the Storybook preview iframe. This is required since the web-component will already be registered with the DOM so HMR doesn't work. (NOTE: an interesting approach to getting HMR working via proxies on customElements.define can be seen here: [vegarringdal/custom-elements-hmr-polyfill](https://github.com/vegarringdal/custom-elements-hmr-polyfill) would love to try find the time to see if I can integrate this)
+Note that instead of script tags to the pre-built Stencil components inside Storybooks `preview-head.html` like a lot of starter repos seem to do, I've directly imported from the built package into `preview.js`. The benefit of this is when a change is made to a Stencil component, the Storybook webpack dev server can know, and can trigger a reload of the preview iframe. With just a script tag, you're stuck manually reloading.
+
+I also did some webpack hackery to automatically inject `module.hot.decline()` into each story - this causes webpack to NOT "hot in" changes, and instead does a full reload of the Storybook preview iframe. This is required since the web-component will already be registered with the DOM so HMR doesn't work. (NOTE: an interesting approach to getting HMR working via proxies on customElements.define can be seen here: [vegarringdal/custom-elements-hmr-polyfill](https://github.com/vegarringdal/custom-elements-hmr-polyfill) would love to see this integrated)
 
 * `npm start` (Storybook + Stencil devserver - storybook will wait for Stencil to be ready before starting)
 * `npm run build` (Stencil + Storybook production builds)
