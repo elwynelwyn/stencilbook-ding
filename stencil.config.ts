@@ -28,6 +28,6 @@ export const config: Config = {
         },
     ],
     devServer: {
-        port: 3333, // if changing, also change the iframe "src" in .storybook/preview-body.html and stencilDevServerUrl in .storybook/main.js
+        port: 3333, // if changing, also change the iframe "src" in .storybook/preview-body.html and the port in package.json start:storybook
     },
 };

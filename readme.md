@@ -17,14 +17,8 @@ Added some extra integration between Storybook and Stencil devservers, so that b
 
 I also did some webpack hackery to automatically inject `module.hot.reject()` into each story - this causes webpack to NOT "hot in" changes, and instead does a full reload of the Storybook preview iframe. This is required since the web-component will already be registered with the DOM so HMR doesn't work. 
 
-Running start-storybook will also automatically spin up the Stencil devserver in the background (check `./storybook/main.js`).
-
-![Example output from running "npm run start"](https://i.imgur.com/opT3Lwd.png)
-
-
-* `npm start` (Storybook + Stencil devserver)
-* `npm run build` (Stencil production build)
-* `npm run build-storybook` (Storybook production build - also first builds Stencil)
+* `npm start` (Storybook + Stencil devserver - storybook will wait for Stencil to be ready before starting)
+* `npm run build` (Stencil + Storybook production builds)
 
 ...see `package.json` for the other standard ones
 
